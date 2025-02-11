@@ -3,60 +3,72 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Notion Flip Clock Widget</title>
+    <title>Flip Clock Widget</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap');
         
         body {
+            background: transparent;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background-color: transparent;
-            font-family: 'Pacifico', cursive;
+            margin: 0;
+            position: relative;
+            flex-direction: column;
         }
-        .flip-clock {
+
+        .clock {
+            font-family: 'Fredoka One', cursive;
+            font-size: 48px;
+            color: #FF99CC;
             display: flex;
-            font-size: 3em;
-            font-weight: bold;
-            color: #D87093;
-            text-shadow: 2px 2px 5px rgba(216, 112, 147, 0.5);
-        }
-        .digit {
-            background: rgba(255, 209, 220, 0.8);
-            padding: 10px 15px;
-            margin: 5px;
-            border-radius: 10px;
-            box-shadow: 2px 2px 5px rgba(255, 192, 203, 0.5);
-            display: inline-block;
+            align-items: center;
+            gap: 10px;
             position: relative;
         }
-        .separator {
-            padding: 0 10px;
-            color: #D87093;
+
+        .heart {
+            font-size: 24px;
+            color: #FF99CC;
+            animation: bounce 1.5s infinite alternate;
+        }
+
+        @keyframes bounce {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-5px); }
+        }
+
+        .gif-container {
+            position: relative;
+            margin-bottom: -10px; /* Avvicina la GIF all'orologio */
+        }
+
+        .gif-container img {
+            width: 50px; /* Rende la GIF più piccola */
         }
     </style>
 </head>
 <body>
-    <div class="flip-clock" id="clock">
-        <span class="digit" id="hours">00</span>
-        <span class="separator">❤</span>
-        <span class="digit" id="minutes">00</span>
-        <span class="separator">❤</span>
-        <span class="digit" id="seconds">00</span>
+    <div class="gif-container">
+        <img src="https://media.giphy.com/media/1HEfctM48fTSanADqj/giphy.gif" alt="Cute GIF">
     </div>
+    <div class="clock">
+        <span class="heart">💗</span>
+        <span id="time">00:00:00</span>
+        <span class="heart">💗</span>
+    </div>
+
     <script>
-        function updateClock() {
+        function updateTime() {
             const now = new Date();
-            let hours = now.getHours().toString().padStart(2, '0');
-            let minutes = now.getMinutes().toString().padStart(2, '0');
-            let seconds = now.getSeconds().toString().padStart(2, '0');
-            document.getElementById('hours').innerText = hours;
-            document.getElementById('minutes').innerText = minutes;
-            document.getElementById('seconds').innerText = seconds;
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const seconds = String(now.getSeconds()).padStart(2, '0');
+            document.getElementById('time').textContent = `${hours}:${minutes}:${seconds}`;
         }
-        setInterval(updateClock, 1000);
-        updateClock();
+        setInterval(updateTime, 1000);
+        updateTime();
     </script>
 </body>
 </html>
